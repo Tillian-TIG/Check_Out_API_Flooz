@@ -9,6 +9,25 @@
     <link rel="stylesheet" href="assest/build/css/intlTelInput.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <title>Home Check Out</title>
+    <style>
+        .hidden {
+            display: none;
+        }
+        
+        .fade-out {
+            animation: fadeOut 0.5s forwards; /* Animation sur 0.5s */
+        }
+
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+            }
+            to {
+                opacity: 0;
+                transform: scale(0.95); /* Rétrécir légèrement pour l'effet */
+            }
+        }
+    </style>
 </head>
 <body>
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
@@ -32,13 +51,14 @@
           </div>
         </div>
       </nav>
-      <div class="container-fluid mt-5" style="width:50%">
+      <div class="container-fluid mt-5" style="width:50%" id="form1">
         <div class="row">
           <div class="col-sm-6 bg-primary">
-            <p>Lorem ipsum...</p>
+            <p>Avatar</p>
           </div>
           <div class="col-sm-6">
-            <form action="/action_page.php">
+            <!-- Form 1 -->
+            <form >
                 <div class="mb-3 mt-3">
                   <label for="nom" class="form-label">Nom:</label>
                   <input type="text" class="form-control" id="fname" placeholder="Entrer votre nom" name="firstname" required>
@@ -51,24 +71,78 @@
                 <div class="mb-3">
                     <input type="tel" class="form-control" id="phone" placeholder="Nuéro de téléphone" name="number" required>
                 </div>
-                <button type="submit" class="btn btn-primary">Envoyer</button>
-              </form>
+                <button type="button" class="btn btn-primary" onclick="validateForm1()">Envoyer</button>
+            </form>
           </div>
         </div>
       </div>
+
+      <div class="container-fluid mt-5 hidden" id="form2-container">
+        <div class="d-flex justify-content-center align-items-center" > <!-- Ajouté pour le centrage -->
+                <!-- Form 2 -->
+                <form id="form2">
+                    <label for="prenom" class="form-label">Votre numéro:</label>
+                    <div class="mb-3">
+                        <input type="tel" class="form-control" id="phone2" placeholder="Numéro de téléphone" name="number" required>
+                    </div>
+                    <button type="button" class="btn btn-primary" onclick="validateForm2()">Envoyer</button>
+                </form>
+            
+        </div>
+    </div>
+    
+    
+  
 <script src="assest/build/js/intlTelInput.js"></script>
 <script>
     var input = document.querySelector("#phone");
+    var input2 = document.querySelector("#phone2");
     window.intlTelInput(input, {});
+    window.intlTelInput(input2, {});
 
     input.addEventListener('input', function () {
-        // Vérifie si l'entrée contient des lettres
         if (/[a-zA-Z]/.test(input.value)) {
             alert("Attention : saisie invalide. Veuillez entrer uniquement des chiffres.");
-            // Optionnel : supprime les lettres saisies
             input.value = input.value.replace(/[a-zA-Z]/g, '');
         }
     });
+    input2.addEventListener('input', function () {
+        if (/[a-zA-Z]/.test(input2.value)) {
+            alert("Attention : saisie invalide. Veuillez entrer uniquement des chiffres.");
+            input2.value = input2.value.replace(/[a-zA-Z]/g, '');
+        }
+    });
+
+    function validateForm1() {
+    // Récupérer les éléments du formulaire 1
+    var fname = document.getElementById("fname").value.trim();
+    var sname = document.getElementById("sname").value.trim();
+    var phone = document.getElementById("phone").value.trim();
+
+    // Vérification des champs : si un des champs est vide, afficher un message d'erreur et ne pas passer au form 2
+    if (!fname || !sname || !phone) {
+        alert("Veuillez remplir tous les champs avant de soumettre le formulaire.");
+        return; // Stoppe l'exécution de la fonction si les champs ne sont pas remplis
+    }
+
+    // Cacher le form1 et afficher form2 avec animation
+    document.getElementById("form1").classList.add('fade-out');
+    setTimeout(() => {
+        document.getElementById("form1").style.display = 'none';
+        document.getElementById("form2-container").classList.remove('hidden');
+    }, 500); // Correspond au temps de l'animation
+}
+
+    function validateForm2() {
+        var phone1 = document.getElementById("phone").value;
+        var phone2 = document.getElementById("phone2").value;
+
+        if (phone1 === phone2) {
+            alert("Succès : Les numéros correspondent !");
+        } else {
+            alert("Erreur : Les numéros ne correspondent pas !");
+        }
+    }
 </script>   
 </body>
 </html>
