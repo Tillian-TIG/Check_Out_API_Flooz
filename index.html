@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="assest/build/css/intlTelInput.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/libphonenumber-js@1.10.9/bundle/libphonenumber-min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <title>Home Check Out</title>
     <style>
         .hidden {
@@ -18,7 +19,11 @@
         .fade-out {
             animation: fadeOut 0.5s forwards; /* Animation sur 0.5s */
         }
-
+        #qrcode {
+            margin: 20px auto;
+            width: 200px;
+            height: 200px;
+        }
         @keyframes fadeOut {
             from {
                 opacity: 1;
@@ -55,7 +60,7 @@
       <div class="container-fluid mt-5" style="width:50%" id="form1">
         <div class="row">
           <div class="col-sm-6 bg-primary">
-            <p>Avatar</p>
+            <p></p>
           </div>
           <div class="col-sm-6">
             <!-- Form 1 -->
@@ -91,6 +96,7 @@
             
         </div>
     </div>
+    <div id="qrcode"></div>
     
     
   
@@ -155,7 +161,23 @@
         }
 
         if (phone1 === phone2) {
-            alert("Succès : Les numéros correspondent !");
+            
+            // Efface le QR code précédent
+            document.getElementById("qrcode").innerHTML = "";
+
+            // Récupère les données à encoder dans le QR code
+            const data = "https://example.com"; // Remplacez par le lien ou le texte que vous souhaitez encoder
+
+            // Initialise le QR code
+            new QRCode(document.getElementById("qrcode"), {
+                text: data,
+                width: 200,
+                height: 200,
+                colorDark: "#000000",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H
+            });
+        
         } else {
             alert("Erreur : Les numéros ne correspondent pas !");
         }

@@ -1,0 +1,46 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Generator</title>
+    <style>
+        #qrcode {
+            margin: 20px auto;
+            width: 200px;
+            height: 200px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Conteneur pour le QR Code -->
+    <div id="qrcode"></div>
+
+    <!-- Bouton pour générer le QR Code -->
+    <button onclick="generateQRCode()">Générer le QR Code</button>
+
+    <!-- Script de QRCode.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+    <script>
+        function generateQRCode() {
+            // Efface le QR code précédent
+            document.getElementById("qrcode").innerHTML = "";
+
+            // Récupère les données à encoder dans le QR code
+            const data = "https://example.com"; // Remplacez par le lien ou le texte que vous souhaitez encoder
+
+            // Initialise le QR code
+            new QRCode(document.getElementById("qrcode"), {
+                text: data,
+                width: 200,
+                height: 200,
+                colorDark: "#000000",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H
+            });
+        }
+    </script>
+
+</body>
+</html>
